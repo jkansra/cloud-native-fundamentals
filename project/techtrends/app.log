@@ -1,0 +1,15 @@
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.0.106:3111/ (Press CTRL+C to quit)
+INFO:app:Article 2020 CNCF Annual Report retreived!
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:30] "GET /1 HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:30] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+INFO:app:Article 2020 CNCF Annual Report retreived!
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:35] "GET /1 HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:35] "GET /static/css/main.css HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:49] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:49] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+INFO:app:Article KubeCon + CloudNativeCon 2021 retreived!
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:51] "GET /2 HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.106 - - [28/Oct/2022 02:20:51] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -

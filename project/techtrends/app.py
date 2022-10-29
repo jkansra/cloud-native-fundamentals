@@ -2,6 +2,8 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
+import logging
+import sys
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -36,13 +38,19 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      ## log line
+      app.logger.info('Article Not Found!')
       return render_template('404.html'), 404
     else:
+      ## log line
+      app.logger.info('Article '+post["title"]+' retreived!')
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    ## log line
+    app.logger.info('About Us page retreived!')
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -61,10 +69,38 @@ def create():
             connection.commit()
             connection.close()
 
+            ## log line
+            app.logger.info('Article '+title+' created!')
             return redirect(url_for('index'))
 
     return render_template('create.html')
 
+@app.route('/healthz')
+def healthz():
+    response = app.response_class(
+            response=json.dumps({"result":"OK - healthy"}),
+            status=200,
+            mimetype='application/json'
+    )
+
+    return response
+
+@app.route('/metrics')
+def metrics():
+    count = 0
+    connection = get_db_connection()
+    count += 1
+    posts = connection.execute('SELECT * FROM posts').fetchall()
+    response = app.response_class(
+            response=json.dumps({"status":"success","code":0,"data":{"db_connection_count": count, "post_count": len(posts)}}),
+            status=200,
+            mimetype='application/json'
+    )
+    connection.close()
+    return response
+
 # start the application on port 3111
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port='3111')
+    ## stream logs to stdout
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    app.run(host='0.0.0.0', port='3111')
