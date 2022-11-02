@@ -1,0 +1,20 @@
+namespace:
+  name: staging
+ 
+service:
+  port: 5111
+  targetPort: 3111
+  type: ClusterIP
+  protocol: TCP
+
+replicaCount: 3
+
+resources:
+  requests:
+    cpu: 300m
+    memory: 90Mi
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+
+
