@@ -10,6 +10,6 @@ spec:
   project: default
   source:
     path: project/argocd
-    repoURL: https://github.com/udacity/nd064_course_1/project
+    repoURL: https://github.com/jkansra/cloud-native-fundamentals
     targetRevision: HEAD
   syncPolicy: {}
