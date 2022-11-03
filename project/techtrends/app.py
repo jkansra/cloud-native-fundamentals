@@ -5,6 +5,7 @@ from werkzeug.exceptions import abort
 import logging
 import sys
 
+db_count = 0
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
@@ -28,6 +29,8 @@ app.config['SECRET_KEY'] = 'your secret key'
 @app.route('/')
 def index():
     connection = get_db_connection()
+    global db_count
+    db_count +=1
     posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
     return render_template('index.html', posts=posts)
@@ -37,6 +40,8 @@ def index():
 @app.route('/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
+    global db_count
+    db_count +=1
     if post is None:
       ## log line
       app.logger.info('Article Not Found!')
@@ -64,6 +69,8 @@ def create():
             flash('Title is required!')
         else:
             connection = get_db_connection()
+            global db_count
+            db_count +=1
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
             connection.commit()
@@ -87,12 +94,12 @@ def healthz():
 
 @app.route('/metrics')
 def metrics():
-    count = 0
     connection = get_db_connection()
-    count += 1
+    global db_count
+    db_count += 1
     posts = connection.execute('SELECT * FROM posts').fetchall()
     response = app.response_class(
-            response=json.dumps({"status":"success","code":0,"data":{"db_connection_count": count, "post_count": len(posts)}}),
+            response=json.dumps({"status":"success","code":0,"data":{"db_connection_count": db_count, "post_count": len(posts)}}),
             status=200,
             mimetype='application/json'
     )
