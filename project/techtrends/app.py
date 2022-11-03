@@ -44,7 +44,7 @@ def post(post_id):
     db_count +=1
     if post is None:
       ## log line
-      app.logger.info('Article Not Found!')
+      app.logger.error('Article Not Found!')
       return render_template('404.html'), 404
     else:
       ## log line
@@ -108,6 +108,9 @@ def metrics():
 
 # start the application on port 3111
 if __name__ == "__main__":
-    ## stream logs to stdout
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    ## stream logs to stdout and stderr
+    stdout = logging.StreamHandler(sys.stdout)
+    stderr = logging.StreamHandler(sys.stderr)
+    handlers = [stdout, stderr]
+    logging.basicConfig(handlers= handlers, level=logging.DEBUG)
     app.run(host='0.0.0.0', port='3111')
