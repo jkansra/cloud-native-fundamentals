@@ -42,8 +42,8 @@ spec:
             httpGet:
               host:
               scheme: HTTP
-              path: {{ .Values.readinessProbe.path }}
-              port: 3111
+              path: {{ .Values.readinessProbe.httpGet.path }}
+              port: {{.Values.readinessProbe.httpGet.port}}
           livenessProbe:
             initialDelaySeconds: 1
             periodSeconds: 2
@@ -53,5 +53,5 @@ spec:
             httpGet:
               host:
               scheme: HTTP
-              path: {{ .Values.livenessProbe.path }}
-              port: 3111
+              path: {{ .Values.livenessProbe.httpGet.path }}
+              port: {{.Values.livenessProbe.httpGet.port}}
